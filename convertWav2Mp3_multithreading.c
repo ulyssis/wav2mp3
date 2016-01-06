@@ -1,4 +1,5 @@
 /*
+ * -- 4.12.2015
 	README: 
 
 		- This code is to realize multithreading on all available CPU cores to covert .wav files to mp3 files	
@@ -12,7 +13,7 @@
 		2. type in the folliwng command in terminal:
 				gcc convertWav2Mp3_multithreading.c -o convertWav2Mp3_multithreading -lmp3lame -lpthread
 	 	3. type in the adress of folder as the prompt suggests, e.g., /home/li/sounds/wav_files
-	
+		
 	
 	
 	*/
