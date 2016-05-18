@@ -1,4 +1,6 @@
 # wav2mp3
+# author: DI LI
+# Dec. 2015
 
 A small tool, which converts all the wav files in a GIVEN folder to mp3 files, and the generated mp3 files are in the same folder.
 
