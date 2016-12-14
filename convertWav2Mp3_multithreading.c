@@ -141,8 +141,8 @@ void *convertWav2Mp3(void* arg ){
 
 int main(int argc, char *argv[])
 {
-	clock_t begin, end;
-	double time_spent;
+//	clock_t begin, end;
+//	double time_spent;
 	
 //	begin = clock();
 
@@ -205,7 +205,6 @@ int main(int argc, char *argv[])
 	}
 	
    	closedir(dpdf);
-	free(folderAddr);
 
 //	end = clock();
 //	time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
