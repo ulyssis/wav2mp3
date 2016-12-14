@@ -158,7 +158,8 @@ int main()
 	
 	if (dpdf != NULL){
 		char *fileName;
-	    while (epdf = readdir(dpdf)){
+		epdf = readdir(dpdf);
+	    while (epdf){
 	   	   	fileName = epdf->d_name;
 			if(strlen(fileName) >= strlen(".wav")){
 		        if(!strcmp(fileName + strlen(fileName) - strlen(".wav"), ".wav"))
@@ -166,6 +167,7 @@ int main()
 			        numberFile ++;
 			        }
 			}
+			epdf = readdir(dpdf);
 	   }
 	   }
 
@@ -179,7 +181,8 @@ int main()
 		pthread_t thr[numberFile];  // array of function identifiers
 		thread_data_t thr_data[numberFile];	// array of parameters to be passed into thread
 		int index = 0;
-	    while (epdf = readdir(dpdf)){
+		epdf = readdir(dpdf);
+	    while (epdf){
     		char *fileName;
 	   	   	fileName = epdf->d_name;
 			if(strlen(fileName) >= strlen(".wav")){
@@ -204,6 +207,7 @@ int main()
 						index ++;
 			        }
 			}
+			epdf = readdir(dpdf);
 	   }
 		
 	int i; 
