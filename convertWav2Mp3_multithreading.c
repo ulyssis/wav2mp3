@@ -37,7 +37,7 @@ typedef struct _thread_data_t {
 // obtain the URL of folder, which is typed in by user
 char* receiveInput(){
     printf("\n Please type in the folder you want to look at:\n");
-    char *user_input = NULL;
+    char *user_input = "/Users/tang/Documents/technical-interview/wav2mp3/funk_samples";
     scanf("%ms", &user_input);
 	return user_input;
 }
@@ -84,7 +84,7 @@ void *convertWav2Mp3(void* arg ){
 	FILE *pcm = fopen(addr0, "rb");
 	if(!pcm){
 		printf("%s is not found!\n", addr0);
-		return;
+		//return;
 	}
 	else{
 	    printf("\nstart to convert %s : \n", addr0);
