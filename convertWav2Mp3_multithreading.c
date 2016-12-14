@@ -139,95 +139,77 @@ void *convertWav2Mp3(void* arg ){
 
 
 
-int main()
+int main(int argc, char *argv[])
 {
 	clock_t begin, end;
 	double time_spent;
 	
-	begin = clock();
+//	begin = clock();
 
 	// get the address of folder which is to be searched from user input.
-    char *folderAddr = receiveInput();
+    //char *folderAddr = receiveInput();
+	char *folderAddr = argv[1];
     printf("The folder address is %s\n", folderAddr);
 
 	// Obtain the number of wav files
 	DIR *dpdf;
-	struct dirent *epdf;
+
 	dpdf = opendir(folderAddr);	
 	int numberFile =0;
 	
 	if (dpdf != NULL){
 		char *fileName;
+		struct dirent *epdf;
 		epdf = readdir(dpdf);
-	    while (epdf){
-	   	   	fileName = epdf->d_name;
-			if(strlen(fileName) >= strlen(".wav")){
-		        if(!strcmp(fileName + strlen(fileName) - strlen(".wav"), ".wav"))
-			        {
-			        numberFile ++;
-			        }
-			}
-			epdf = readdir(dpdf);
-	   }
-	   }
-
-	   printf("The number of files is: %d\n", numberFile);
-	   	
-	// Iterate all the files in the given folder
-	dpdf = opendir(folderAddr);	
-
-	if (dpdf != NULL){
 		int rc;
-		pthread_t thr[numberFile];  // array of function identifiers
-		thread_data_t thr_data[numberFile];	// array of parameters to be passed into thread
-		int index = 0;
-		epdf = readdir(dpdf);
+
 	    while (epdf){
-    		char *fileName;
 	   	   	fileName = epdf->d_name;
+
+			// Iterate all the files in the given folder
 			if(strlen(fileName) >= strlen(".wav")){
 		        if(!strcmp(fileName + strlen(fileName) - strlen(".wav"), ".wav"))
 			        {
 
 					// printf("Find one .wav file\n");
+			        numberFile ++;
 
-					thr_data[index].file = malloc(strlen(fileName) + 1);
-					strcpy(thr_data[index].file, fileName);
+		    		pthread_t thr;  // array of function identifiers
+		    		thread_data_t thr_data;	// array of parameters to be passed into thread
+
+					thr_data.file = malloc(strlen(fileName) + 1);
+					strcpy(thr_data.file, fileName);
 						
-					thr_data[index].folder = malloc(strlen(folderAddr) + 1);
-					strcpy(thr_data[index].folder, folderAddr);
+					thr_data.folder = malloc(strlen(folderAddr) + 1);
+					strcpy(thr_data.folder, folderAddr);
 
-					if ( (rc = pthread_create(&thr[index], NULL, convertWav2Mp3, &thr_data[index])) ) {
+					if ( (rc = pthread_create(&thr, NULL, convertWav2Mp3, &thr_data)) ) {
 						 fprintf(stderr, "error: pthread_create, rc: %d\n", rc);
 						 return EXIT_FAILURE;
 						}
 						else{
-							pthread_join(thr[index], NULL);
+							pthread_join(thr, NULL);
 						}
-						index ++;
+
+						free(thr_data.file);
+						free(thr_data.folder);
 			        }
 			}
 			epdf = readdir(dpdf);
-	   }
-		
-	int i; 
-	for(i =0; i< numberFile; i++){
-		free(thr_data[i].file);
-		free(thr_data[i].folder);
-	}
-	   	
-	}
-	else{
+	    }
+
+	    printf("The number of files is: %d\n", numberFile);
+
+	   }else{
 		printf("The input address can not be found, please check the input.\n");
 	}
 	
    	closedir(dpdf);
-   	free(epdf);
 	free(folderAddr);
 
-	end = clock();
-	time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-	printf("The consumed time is: %f\n", time_spent);
+//	end = clock();
+//	time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+//	printf("The consumed time is: %f\n", time_spent);
     return EXIT_SUCCESS;
 }
 
