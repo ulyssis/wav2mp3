@@ -222,8 +222,8 @@ int main()
 	}
 	
    	closedir(dpdf);
-   	free(epdf);
-	free(folderAddr);
+//   	free(epdf);
+//	free(folderAddr);
 
 	end = clock();
 	time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
