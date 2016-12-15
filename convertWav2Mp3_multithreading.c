@@ -42,7 +42,7 @@ char* receiveInput(){
 	return user_input;
 }
 
-// xxx.wav -> xxx
+// fileName.wav -> fileaName
 char* removePostfix(char* mystr) {
     char *retstr;
     char *lastdot;
@@ -57,7 +57,7 @@ char* removePostfix(char* mystr) {
     return retstr;
 }
 
-// xxx -> xxx.mp3
+// fileName -> fileName.mp3
 char* addPostfix(char *fileNameRemove){
 	char * postfix = ".mp3" ;
 		strcat(fileNameRemove, postfix);
@@ -134,17 +134,18 @@ void *convertWav2Mp3(void* arg ){
     fclose(mp3);
     fclose(pcm);
     
-    pthread_exit(NULL);
+    //pthread_exit(NULL);
+    return(NULL);
 }
 
 
 
 int main(int argc, char *argv[])
 {
-//	clock_t begin, end;
-//	double time_spent;
+	clock_t begin, end;
+	double time_spent;
 	
-//	begin = clock();
+	begin = clock();
 
 	// get the address of folder which is to be searched from user input.
     //char *folderAddr = receiveInput();
@@ -162,6 +163,7 @@ int main(int argc, char *argv[])
 		struct dirent *epdf;
 		epdf = readdir(dpdf);
 		int rc;
+//		char log1[] = "Find one .wav file";
 
 	    while (epdf){
 	   	   	fileName = epdf->d_name;
@@ -171,7 +173,7 @@ int main(int argc, char *argv[])
 		        if(!strcmp(fileName + strlen(fileName) - strlen(".wav"), ".wav"))
 			        {
 
-					// printf("Find one .wav file\n");
+					 printf("Find one wav file %s\n", fileName);
 			        numberFile ++;
 
 		    		pthread_t thr;  // array of function identifiers
@@ -188,7 +190,10 @@ int main(int argc, char *argv[])
 						 return EXIT_FAILURE;
 						}
 						else{
-							pthread_join(thr, NULL);
+							  if ( pthread_join ( thr, NULL ) ) {
+								fprintf(stderr, "error joining thread, rc: %d\n", rc);
+							    return EXIT_FAILURE;
+							  }
 						}
 
 						free(thr_data.file);
@@ -206,9 +211,9 @@ int main(int argc, char *argv[])
 	
    	closedir(dpdf);
 
-//	end = clock();
-//	time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-//	printf("The consumed time is: %f\n", time_spent);
+	end = clock();
+	time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+	printf("The consumed time is: %f\n", time_spent);
     return EXIT_SUCCESS;
 }
 
