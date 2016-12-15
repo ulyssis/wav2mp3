@@ -42,7 +42,7 @@ char* receiveInput(){
 	return user_input;
 }
 
-// xxx.wav -> xxx
+// filename.wav -> filename
 char* removePostfix(char* mystr) {
     char *retstr;
     char *lastdot;
@@ -57,7 +57,7 @@ char* removePostfix(char* mystr) {
     return retstr;
 }
 
-// xxx -> xxx.mp3
+// filename -> filename.mp3
 char* addPostfix(char *fileNameRemove){
 	char * postfix = ".mp3" ;
 		strcat(fileNameRemove, postfix);
@@ -139,7 +139,7 @@ void *convertWav2Mp3(void* arg ){
 
 
 
-int main()
+int main(int argc, char *argv[])
 {
 	clock_t begin, end;
 	double time_spent;
@@ -147,7 +147,8 @@ int main()
 	begin = clock();
 
 	// get the address of folder which is to be searched from user input.
-    char *folderAddr = receiveInput();
+    //char *folderAddr = receiveInput();
+    char *folderAddr = argv[1];
     printf("The folder address is %s\n", folderAddr);
 
 	// Obtain the number of wav files
