@@ -1,21 +1,8 @@
 /*
- * -- 4.12.2015
-	README: 
-
-		- This code is to realize multithreading on all available CPU cores to covert .wav files to mp3 files	
-		
-		- This code has been tested on Ubuntu 12.04 OS (linux kernel: 3.13.0-66-generic).
-	
-
-	 To run this code:
-	 
-		1. enter the folder where this file locates
-		2. type in the folliwng command in terminal:
-				gcc convertWav2Mp3_multithreading.c -o convertWav2Mp3_multithreading -lmp3lame -lpthread
-	 	3. type in the adress of folder as the prompt suggests, e.g., /home/li/sounds/wav_files
-		
-	
-	
+ * -- 16.12.2016
+ * Di Li
+ *
+ * please read README.md
 	*/
 
 
@@ -223,8 +210,7 @@ int main(int argc, char *argv[])
 	}
 	
    	closedir(dpdf);
-//   	free(epdf);
-//	free(folderAddr);
+
 
 	end = clock();
 	time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
