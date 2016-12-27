@@ -10,10 +10,14 @@ This code realizes multithreading on all available CPU cores to covert .wav file
 	 
 		1. enter the folder where this file locates
 		2. type in the folliwng command in terminal:
-
+			compile:
 			gcc -I/usr/local/include/ -c convertWav2Mp3_multithreading.c
-			and		
+			and	then link:
 			gcc -o wav2mp3 convertWav2Mp3_multithreading.o -L/usr/local/lib -lpthread -lmp3lame
+			
+			or: 
+			gcc -I/usr/local/include/ convertWav2Mp3_multithreading.c -o Wav2Mp3 -L/usr/local/lib -lmp3lame -lpthread
+
 				
 	 	3. type in the adress of folder as the prompt suggests, example command is:
 			./wav2mp3 /sounds/wav_files
